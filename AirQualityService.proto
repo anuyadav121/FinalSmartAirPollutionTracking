@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "smart.air.pollution.airquality";
+option java_outer_classname = "AirQualityServiceImpl";
+
+
+// Request message for the GetLatestAirQualityData method
+message GetLatestAirQualityDataRequest {
+  string location = 1;
+}
+
+// Response message for the GetLatestAirQualityData method
+message GetLatestAirQualityDataResponse {
+  int32 aqi = 1;
+  Pollutant pollutants = 2;
+  string health_effects = 3;
+}
+
+// Request message for the GetAirQualityDataByTimeRange method
+message GetAirQualityDataByTimeRangeRequest {
+  string location = 1;
+  int64 start_time = 2;
+  int64 end_time = 3;
+}
+
+// Response message for the GetAirQualityDataByTimeRange method
+message GetAirQualityDataByTimeRangeResponse {
+  int64 TimeStamp = 1;
+  int32 aqi = 2;
+  Pollutant pollutants = 3;
+}
+
+// Pollutant message used in both request and response messages
+message Pollutant {
+  string name = 1;
+  float level = 2;
+}
+
+// AirQualityService definition
+service AirQualityService {
+
+  // Unary RPC method
+  rpc GetLatestAirQualityData (GetLatestAirQualityDataRequest) returns (GetLatestAirQualityDataResponse) {}
+
+  // Server streaming RPC method
+
+  rpc GetAirQualityDataByTimeRange (GetAirQualityDataByTimeRangeRequest) returns (stream GetAirQualityDataByTimeRangeResponse) {}
+
+}

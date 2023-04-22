@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+
+option java_multiple_files = true;
+option java_package = "smart.air.pollution.historicaldata";
+option java_outer_classname = "HistoricalDataServiceimpl";
+
+service HistoricalDataService {
+  rpc GetHistoricalData(stream GetHistoricalDataRequest) returns (stream GetHistoricalDataResponse) {}
+}
+
+message GetHistoricalDataRequest {
+  string location = 1;
+  int64 start_time = 2;
+  int64 end_time = 3;
+}
+
+message GetHistoricalDataResponse {
+  int64 TimeStamp = 1;
+  int32 AQI = 2;
+   Pollutant pollutants = 3;
+}
+
+message Pollutant {
+  string name = 1;
+  float level = 2;
+}
